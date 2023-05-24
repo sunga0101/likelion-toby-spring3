@@ -8,7 +8,7 @@ import java.util.Map;
 import static java.lang.Class.forName;
 import static java.lang.System.getenv;
 
-public class UserDao {
+public class UserDAO {
 
     public Connection getConnection() throws SQLException, ClassNotFoundException {
         Map<String,String> env = getenv();
@@ -30,7 +30,7 @@ public class UserDao {
 
         Connection conn = getConnection();
         PreparedStatement pstmt = conn.prepareStatement("insert into users(id, name, password) values (?,?,?)");
-        pstmt.setString(1,"3");
+        pstmt.setString(1,"2");
         pstmt.setString(2,"최민지");
         pstmt.setString(3, "@12$#%@!");
         pstmt.executeUpdate();
@@ -63,10 +63,10 @@ public class UserDao {
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        UserDao userDao = new UserDao();
+        UserDAO userDao = new NUserDAO();
         userDao.add();
 
-        User user1 = userDao.get("3");
+        User user1 = userDao.get("2");
         System.out.println(user1.getId());
         System.out.println(user1.getName());
         System.out.println(user1.getPassword());
