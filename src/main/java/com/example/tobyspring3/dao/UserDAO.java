@@ -4,18 +4,18 @@ import com.example.tobyspring3.domain.User;
 
 import java.sql.*;
 
-public abstract class UserDAO {
+public class UserDAO {
         ConnectionMaker connectionMaker;
 
-    public UserDAO() {
-        this.connectionMaker = new DConnectionMaker();
+    public UserDAO(ConnectionMaker connectionMaker) {
+        this.connectionMaker = connectionMaker;
     }
     public void add() throws ClassNotFoundException, SQLException {
 
         Connection conn = connectionMaker.makeConnection();
         PreparedStatement pstmt = conn.prepareStatement("insert into users(id, name, password) values (?,?,?)");
-        pstmt.setString(1,"5");
-        pstmt.setString(2,"개똥이");
+        pstmt.setString(1,"6");
+        pstmt.setString(2,"개똥1이");
         pstmt.setString(3, "@12$#%@!");
         pstmt.executeUpdate();
         pstmt.close();
@@ -46,14 +46,19 @@ public abstract class UserDAO {
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        UserDAO userDao = new NUserDAO();
-        userDao.add();
+//        UserDAO userDao = new NUserDAO();
+//        userDao.add();
+        ConnectionMaker cm = new DConnectionMaker();
+        UserDAO userdao = new UserDAO(cm);
+        userdao.add();
 
-        User user1 = userDao.get("5");
+        User user1 = userdao.get("6");
         System.out.println(user1.getId());
         System.out.println(user1.getName());
         System.out.println(user1.getPassword());
+
+
     }
 
-    public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
+
 }
